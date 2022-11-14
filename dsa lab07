@@ -1,0 +1,47 @@
+ #include <iomanip>
+ #include <iostream>
+   #include "sortedtype.cpp"
+   #include "sortedtype.h"
+    using namespace std;
+      /**  * Class that represents time of the day.  **/
+       class timeStamp {     int hours, minutes, seconds;
+         public:     // Constructor     timeStamp() : hours(0), minutes(0), seconds(0) {}
+         	    // Paramerterised constructor     t
+         	    timeStamp(int s, int m, int h) : hours(h), minutes(m), seconds(s) {}
+         	     // Overloading < operator
+         	      bool operator<(timeStamp& other) {
+         	       if (hours < other.hours) {          
+						return true;         }
+         	     else if (hours == other.hours) {
+						
+         	        if (minutes < other.minutes) {         
+         	        	        return true;             }
+         	     else if (minutes == other.minutes) {    
+         	     	             return seconds < other.seconds;    
+				 }
+         	     else {                 return false;     
+         	             }      
+         	                }
+         	     else {             return false;         }     }
+         	     // Overloading == operator
+         	      bool operator==(timeStamp& other) {         return hours == other.hours && minutes == other.minutes &&                seconds == other.seconds;     }
+         	      // Overloading > operator
+         	       bool operator>(timeStamp& other) {         return !(operator==(other) && operator<(other));     }
+         	      // Overloading << operator     friend ostream& operator<<(ostream& out, timeStamp& time); };
+         	    // ostream& operator<<(ostream& out, timeStamp& time)
+         	     {     char str[20];
+         	      sprintf(str, "%02d:%02d:%02d", time.seconds, time.minutes, time.hours);
+         	      out << str;     return out; }  \
+         	     int main() {
+         	     	  SortedType<timeStamp> list;     int h, m, s;
+         	       for (int i = 0; i < 5; i++) {         cin >> s >> m >> h;
+         	      list.InsertItem(timeStamp(s, m, h));     }
+         	      list.DeleteItem(timeStamp(25, 36, 17));
+         	     /*Resets the private member 'currentPos' of SortedType*/
+         	       list.ResetList();
+         	       cout << endl;
+         	       timeStamp temp;
+         	        for (int i = 0; i < list.LengthIs(); i++) {         list.GetNextItem(temp);
+         	      // Get next element in the list
+         	       cout << temp << endl;     }
+         	      return 0; }
